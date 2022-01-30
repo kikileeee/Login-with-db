@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+    </style>
+</head>
+
+<body>
+
+
+    <form class="loginForm">
+
+        <h1 class="temp">Login into your account</h1>
+        <input type="text" placeholder="Username" class="name">
+        <p class="d-none pUsername">Username must have more than 6 Characters</p>
+        <input type="email" placeholder="Email address" class="d-none toggleDisplay email">
+        <p class="d-none pEmail">Email address must be valid</p>
+        <input type="password" placeholder="Password" class="password">
+        <p class="d-none pPassword">Password must have atleast 6 Characters</p>
+        <input type="password" placeholder="Confirm Password" class="d-none toggleDisplay confirmPassword">
+        <p class="d-none pPasswordConfirm">Passwords must be the same</p>
+        <input type="button" value="Sign in" class="signIn toggleDisplay" style="cursor: pointer">
+        <input type="button" value="Sign up" class="d-none signUp toggleDisplay" style="cursor: pointer">
+        <a class="toggleDisplay passwordForgot">Forgot your password?</a>
+        <a class="init signUpText toggleDisplay">Dont have an account? Sign up</a>
+        <a class="init d-none signIpText toggleDisplay">Already have an account? Sign in</a>
+
+    </form>
+
+
+</body>
+<script src="main.js"></script>
+
+</html>
