@@ -50,6 +50,7 @@ input[type="button"]{
     background-color: mediumseagreen;
     border: none;
     border-radius: 4px;
+    cursor: pointer;
 }
 .d-none{
     display: none;
@@ -61,7 +62,4 @@ form p{
 }
 form a{
     cursor: pointer;
-}
-.signIn{
-    
 }
