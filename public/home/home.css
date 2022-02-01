@@ -12,7 +12,6 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
   background: mediumseagreen;
   color: #ffffff;
   padding: 20px;
@@ -61,3 +60,98 @@ body {
   .menu li {
     padding: 0 20px;
   }
+  .userPanel{
+    background-color: white;
+    width: 30%;
+    min-width: 300px;
+    min-height: 20vh;
+    margin-top: 0;
+    flex-grow: 1;
+  }
+  .userPanel li{
+    margin: 25px;
+    text-align: center;
+  }
+  .userPanel li div,.p3{
+    text-decoration: none;
+    font-size: large;
+    color: white;
+    background-color: #007bff;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .userPanel li div:hover, .p3:hover{
+    background-color: #005dc0;
+    transition: 250ms ease-out;
+  }
+  .userPanel ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .flex{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .grid{
+    display: grid;
+    place-items: center;
+  }
+  .secondPanel{
+    background-color: rgb(211, 211, 211);
+    width: auto;
+    min-height: 100vh;
+    margin-top: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 4;
+  }
+  .secondPanel div{
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .p2{
+    margin-left: 15px;
+    padding: 15px;
+    min-width: 150px;
+    color: white;
+    text-align: center;
+    background-color: #17a2b8;
+    border-radius: 5px;
+    font-size: large;
+  }
+  .p3 {
+    margin-left: 15px;  
+    padding: 15px;
+  }
+  .d-none{
+    display: none;
+  }
+  .user{
+    color: white;
+    background-color: #dc3545;
+    width: 200px;
+    padding: 15px;
+    margin-left: 20px;
+    border-radius: 5px;
+    font-size: large;
+    cursor: pointer;
+
+  }
+  .user:hover{
+    background-color: #a90b1b;
+    transition: 250ms ease-out;
+  }
+  @media only screen and (max-width: 600px) {
+    .userPanel{
+      width: 100%;
+    }
+    .secondPanel{
+      width: 100%;
+    }
+  }
+  

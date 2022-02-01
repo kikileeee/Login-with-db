@@ -3,6 +3,7 @@ const cors = require("cors");
 const { createPool } = require('mysql');
 const { ok } = require('assert');
 const { response } = require('express');
+const { status } = require('express/lib/response');
 
 const app = express()
 const port = 3300
@@ -31,6 +32,12 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   console.log(req.body)
   insertData(req.body.username, req.body.email, req.body.password)
+})
+
+app.delete('/', (req, res) => {
+  console.log(req.body.username)
+  pool.query(`DELETE FROM users WHERE username='${req.body.username}'`)
+  res.send('status')
 })
 
 function insertData(username, email, password) {
