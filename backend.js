@@ -40,6 +40,13 @@ app.delete('/', (req, res) => {
   res.send('status')
 })
 
+app.put('/', (req, res) => {
+  console.log(req.body.username)
+  console.log('PUT')
+  pool.query(`UPDATE users SET adminPrivileges=1 WHERE username='${req.body.username}'`)
+  res.send('status')
+})
+
 function insertData(username, email, password) {
   pool.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`)
   console.log('imported')

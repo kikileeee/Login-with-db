@@ -1,6 +1,9 @@
 // get data of logged user
 let userDatabase = []
 let userInfo = JSON.parse(localStorage.getItem('userInfo')) || []
+
+fetchData()
+
 document.querySelector('.helloUser').textContent = 'Hello ' + userInfo.username
 if (userInfo.adminPrivileges != 1) {
     document.querySelector('.userPanel').classList.add('d-none')
@@ -9,13 +12,14 @@ if (userInfo.adminPrivileges != 1) {
 document.querySelector('.allUsers').addEventListener('click', e => {
     clearChilds('secondPanel')
     fetchData()
-        for (i = 0; i < userDatabase.length; i++) {
-            if (userDatabase[i].adminPrivileges == 0) {
-                createData(userDatabase)
-            }
+    for (i = 0; i < userDatabase.length; i++) {
+        if (userDatabase[i].adminPrivileges == 0) {
+            createData(userDatabase)
         }
-        deleteUser()
-    
+    }
+    deleteUser()
+    addAdminPrivilegesToUser()
+
 });
 
 document.querySelector('.allAdmins').addEventListener('click', e => {
@@ -23,10 +27,13 @@ document.querySelector('.allAdmins').addEventListener('click', e => {
     fetchData()
     for (i = 0; i < userDatabase.length; i++) {
         if (userDatabase[i].adminPrivileges != 0) {
-            createData(userDatabase)
+            if (userDatabase[i].username != 'admin') {
+                createData(userDatabase)
+            }
         }
     }
     deleteUser()
+    addAdminPrivilegesToUser()
 })
 // Clear parents childs
 function clearChilds(x) {
@@ -47,48 +54,62 @@ function createData(data) {
     p.classList.add(data[i].username, 'user')
     p2.classList.add('p2')
     p2.textContent = 'User :  ' + data[i].username
-    p3.textContent = 'Add Admin'
-    p3.classList.add('p3')
+    p3.textContent = 'Add Admin to user ' + data[i].username
+    p3.classList.add(data[i].username, 'p3')
     div.append(p2)
     div.append(p)
     div.append(p3)
     parent.append(div)
 }
 
-function fetchData() {
-    fetch('http://localhost:3300/', {
+async function fetchData() {
+    await fetch('http://localhost:3300/', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     }).then(response => response.json().then(data => {
         userDatabase = data
     }))
 }
-fetchData()
 
 function deleteUser() {
-document.querySelectorAll('.user').forEach( e =>{
-    e.addEventListener('click', function() {
+    document.querySelectorAll('.user').forEach(e => {
+        e.addEventListener('click', function () {
 
-        let data = {username: e.classList[0]}
-        console.log(data)
-
-        fetch('http://localhost:3300/', {
-            method: 'DELETE',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        }).then((response) => {
-            resetUsers()
+            let data = { username: e.classList[0] }
+            fetch('http://localhost:3300/', {
+                method: 'DELETE',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => {
+                resetUsers()
+            })
         })
     })
-})
 }
-function resetUsers() {
+async function resetUsers() {
     clearChilds('secondPanel')
-    fetchData()
+    await fetchData()
     for (i = 0; i < userDatabase.length; i++) {
         if (userDatabase[i].adminPrivileges == 0) {
             createData(userDatabase)
         }
     }
     deleteUser()
+
+}
+
+function addAdminPrivilegesToUser() {
+    document.querySelectorAll('.p3').forEach(e => {
+        e.addEventListener('click', function () {
+            console.log('ss')
+            let data = { username: e.classList[0] }
+            fetch('http://localhost:3300/', {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => {
+                resetUsers()
+            })
+        })
+    })
 }
