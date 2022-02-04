@@ -41,9 +41,11 @@ app.delete('/', (req, res) => {
 })
 
 app.put('/', (req, res) => {
-  console.log(req.body.username)
-  console.log('PUT')
   pool.query(`UPDATE users SET adminPrivileges=1 WHERE username='${req.body.username}'`)
+  res.send('status')
+})
+app.put('/s', (req, res) => {
+  pool.query(`UPDATE users SET adminPrivileges=0 WHERE username='${req.body.username}'`)
   res.send('status')
 })
 
