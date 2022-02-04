@@ -124,7 +124,7 @@ async function resetUsers() {
                 if (userDatabase[i].username != 'admin' && userInfo.username == 'admin') {
                     createData(userDatabase, true)
                 }
-                else if (userDatabase[i].username != 'admin'){
+                else if (userDatabase[i].username != 'admin') {
                     createData(userDatabase, false)
                 }
             }
@@ -161,7 +161,6 @@ function addAdminPrivilegesToUser() {
 function removeAdminPrivilegesToUser() {
     document.querySelectorAll('.p4').forEach(e => {
         e.addEventListener('click', function () {
-            console.log('p4 event is placed')
             let data = { username: e.classList[0] }
             fetch('http://localhost:3300/s', {
                 method: 'PUT',
@@ -172,4 +171,45 @@ function removeAdminPrivilegesToUser() {
             })
         })
     })
+}
+
+document.querySelector('.hide').addEventListener('click', e => {
+    clearChilds('secondPanel')
+})
+
+// Second panel code
+
+//add comment
+document.querySelector('.btnComment').addEventListener('click', e => {
+    let comment = document.querySelector('.inputComment').value
+    let userComment = {
+        comment: comment,
+        user: userInfo.username
+    }
+    console.log(userComment)
+    fetch('http://localhost:3300/comment', {
+        method: 'POST',
+        body: JSON.stringify(userComment),
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => {
+        response.json().then(data => { 
+            console.log(data)
+            writeAllComments(data)
+        })
+    })
+})
+function writeAllComments(data) {
+    for (i=0;i < data.length;i++){
+        let parent = document.querySelector('.showComments')
+        let div = document.createElement('div')
+        let p = document.createElement('a')
+        let p2 = document.createElement('p')
+        let br = document.createElement('br')
+        console.log(data[i].owner)
+        p.textContent = data[i].owner
+        p2.textContent = data[i].value
+        div.append(p, br,p2)
+        parent.append(div)
+    }
+
 }

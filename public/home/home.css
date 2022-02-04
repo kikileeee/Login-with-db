@@ -82,7 +82,7 @@ body {
     cursor: pointer;
     text-align: center;
   }
-  .userPanel li div:hover, .p3:hover{
+  .userPanel li div:hover, .p3:hover, .addComment button:hover{
     background-color: #005dc0;
     transition: 250ms ease-out;
   }
@@ -150,6 +150,34 @@ body {
     background-color: #a90b1b;
     transition: 250ms ease-out;
   }
+  .addComment{
+    min-height: 30vh;
+    flex-direction: column;
+    align-items: center;
+  }
+  .addComment input{
+    width: 300px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+
+  }
+  .addComment button{
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    font-size: large;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  .showComments{
+    background-color: rgb(226, 226, 226);
+    height: 100vh;
+    flex-direction: column;
+  }
+  
   @media only screen and (max-width: 600px) {
     .userPanel{
       width: 100%;
