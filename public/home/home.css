@@ -97,7 +97,7 @@ body {
   }
   .flex{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
   }
   .grid{
     display: grid;
@@ -105,13 +105,12 @@ body {
   }
   .secondPanel{
     background-color: rgb(211, 211, 211);
-    width: auto;
     min-height: 100vh;
     margin-top: 0;
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex-grow: 4;
+    width: 80%;
+    flex-grow: 1;
   }
   .secondPanel div{
     margin: 0;
@@ -132,9 +131,6 @@ body {
     margin-left: 15px;  
     padding: 15px;
   }
-  .d-none{
-    display: none;
-  }
   .user{
     color: white;
     background-color: #dc3545;
@@ -151,15 +147,17 @@ body {
     transition: 250ms ease-out;
   }
   .addComment{
-    min-height: 30vh;
+    min-height: 10vh;
     flex-direction: column;
     align-items: center;
   }
   .addComment input{
-    width: 300px;
+    width: 400px;
+    height: 30px;
     padding: 10px;
     border: none;
     border-radius: 5px;
+    margin-top: 20px;
 
   }
   .addComment button{
@@ -170,6 +168,7 @@ body {
     padding: 15px;
     font-size: large;
     margin-top: 20px;
+    margin-bottom: 20px;
     cursor: pointer;
   }
   .showComments{
@@ -177,13 +176,60 @@ body {
     height: 100vh;
     flex-direction: column;
   }
+  .showComments div{
+    width: 100%;
+  }
+  .showComments a{
+    margin: 30px;
+    margin-left: 0;
+  }
+  .showComments b{
+    margin: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+  }
+  .showComments p{
+    padding: 15px;
+    padding-left: 40px;
+    margin-top: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+  }
+  .showComments img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    padding: 15px;
+    padding-right: 10px;
+  }
+  .adminPanelwButton div{
+    width: 100%;
+  }
   
-  @media only screen and (max-width: 600px) {
+  .d-none{
+    display: none !important;
+  }
+  .hoverElement{
+    color: red;
+    font-weight: 500;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+  }
+  
+  @media only screen and (max-width: 800px) {
     .userPanel{
       width: 100%;
     }
     .secondPanel{
       width: 100%;
+    }
+    .flex{
+      display: flex;
+      flex-direction: column;
     }
   }
   

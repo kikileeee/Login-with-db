@@ -11,7 +11,7 @@ if (userInfo.adminPrivileges != 1) {
 }
 
 document.querySelector('.allUsers').addEventListener('click', e => {
-    clearChilds('secondPanel')
+    clearChilds('adminPanelwButton')
     fetchData()
     for (i = 0; i < userDatabase.length; i++) {
         if (userDatabase[i].adminPrivileges == 0) {
@@ -28,11 +28,12 @@ document.querySelector('.allUsers').addEventListener('click', e => {
     deleteUser()
     addAdminPrivilegesToUser()
     removeAdminPrivilegesToUser()
+    hideComments()
 
 });
 
 document.querySelector('.allAdmins').addEventListener('click', e => {
-    clearChilds('secondPanel')
+    clearChilds('adminPanelwButton')
     fetchData()
     for (i = 0; i < userDatabase.length; i++) {
         if (userDatabase[i].adminPrivileges == 1 && userInfo.username == 'admin') {
@@ -51,6 +52,7 @@ document.querySelector('.allAdmins').addEventListener('click', e => {
     deleteUser()
     addAdminPrivilegesToUser()
     removeAdminPrivilegesToUser()
+    hideComments()
 })
 // Clear parents childs
 function clearChilds(x) {
@@ -62,7 +64,7 @@ function clearChilds(x) {
     }
 }
 function createData(data, x) {
-    let parent = document.querySelector('.secondPanel')
+    let parent = document.querySelector('.adminPanelwButton')
     let div = document.createElement('div')
     let p3 = document.createElement('p')
     let p2 = document.createElement('p')
@@ -111,7 +113,7 @@ function deleteUser() {
     })
 }
 async function resetUsers() {
-    clearChilds('secondPanel')
+    clearChilds('adminPanelwButton')
     await fetchData()
     for (i = 0; i < userDatabase.length; i++) {
         if (tab == 'users') {
@@ -174,17 +176,36 @@ function removeAdminPrivilegesToUser() {
 }
 
 document.querySelector('.hide').addEventListener('click', e => {
-    clearChilds('secondPanel')
+    clearChilds('adminPanelwButton')
+    hideComments()
 })
+function hideComments() {
+    document.querySelector('.addComment').classList.add('d-none')
+    document.querySelector('.showComments').classList.add('d-none')
+}
+document.querySelector('.adminPanelShowComments').addEventListener('click', e => {
+    getComments()
+    showComments()
+    clearChilds('adminPanelwButton')
+})
+function showComments() {
+    document.querySelector('.addComment').classList.remove('d-none')
+    document.querySelector('.showComments').classList.remove('d-none')
+}
 
 // Second panel code
 
 //add comment
 document.querySelector('.btnComment').addEventListener('click', e => {
     let comment = document.querySelector('.inputComment').value
+
+    let today = new Date()
+    let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' at ' + today.getHours() + ":" + today.getMinutes()
+
     let userComment = {
         comment: comment,
-        user: userInfo.username
+        user: userInfo.username,
+        date: date
     }
     console.log(userComment)
     fetch('http://localhost:3300/comment', {
@@ -192,24 +213,84 @@ document.querySelector('.btnComment').addEventListener('click', e => {
         body: JSON.stringify(userComment),
         headers: { 'Content-Type': 'application/json' }
     }).then(response => {
-        response.json().then(data => { 
-            console.log(data)
-            writeAllComments(data)
-        })
+        getComments()
     })
 })
 function writeAllComments(data) {
-    for (i=0;i < data.length;i++){
+    clearChilds('showComments')
+    for (i = 0; i < data.length; i++) {
         let parent = document.querySelector('.showComments')
         let div = document.createElement('div')
-        let p = document.createElement('a')
+        div.classList.add(data[i].owner, 'commentFromUser')
+        let a = document.createElement('a')
+        let b = document.createElement('b')
         let p2 = document.createElement('p')
         let br = document.createElement('br')
-        console.log(data[i].owner)
-        p.textContent = data[i].owner
+        a.textContent = 'says:'
+        b.textContent = data[i].owner
         p2.textContent = data[i].value
-        div.append(p, br,p2)
+        let a2 = document.createElement('a')
+        let img = document.createElement('img')
+        img.src = 'default.jpg'
+        a2.textContent = data[i].date
+        div.append(img, b, a, br, a2, p2)
         parent.append(div)
     }
+    if (userInfo.username == 'admin'){
+        mouserOverComment()
+        mouserOutComment()
+    
+    }
 
+}
+
+async function getComments() {
+    await fetch('http://localhost:3300/comment', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => {
+        response.json().then(data => {
+            writeAllComments(data)
+        })
+    })
+}
+getComments()
+
+function mouserOverComment() {
+    document.querySelectorAll('.commentFromUser').forEach(e => {
+        e.addEventListener('mouseover', function () {
+            if (document.querySelector('.hoverElement') != null) {
+                document.querySelectorAll('.hoverElement').forEach(e => {
+                    e.remove()
+                })
+
+            }
+            let username = this.classList[0]
+            let bodyOfUsername = this
+            let p = document.createElement('a')
+            p.classList.add('hoverElement')
+            p.textContent = 'Delete comment'
+            p.onclick = function(){
+                console.log('clicked')
+            }
+            bodyOfUsername.append(p)
+
+            // document.querySelector('.hoverElement').addEventListener('click', e=>{
+            //     console.log('clicked')
+            // })
+
+        })
+    })
+}
+function mouserOutComment() {
+    document.querySelectorAll('.commentFromUser').forEach(e => {
+        e.addEventListener('mouseleave', function () {
+            if (document.querySelector('.hoverElement') != null) {
+                document.querySelectorAll('.hoverElement').forEach(e => {
+                    e.remove()
+                })
+
+            }
+        })
+    })
 }

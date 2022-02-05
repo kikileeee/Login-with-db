@@ -116,9 +116,10 @@ app.post('/', (req, res) => {
   })
 })
 app.post('/comment', (req, res) =>{
-  let username = req.body.user
-  let comment = req.body.comment
-  pool.query(`INSERT INTO comment (value, owner) VALUES ('${comment}','${username}')`)
+  commentPost(req.body.user, req.body.comment, req.body.date)
+  res.send('s')
+})
+app.get('/comment', (req, res) =>{
   pool.query(`SELECT * FROM comment`, (error, data) => {
     res.send(data)
   })
@@ -143,4 +144,7 @@ app.put('/s', (req, res) => {
     pool.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`)
     console.log('imported')
 
+  }
+  async function commentPost(username, comment, date) {
+    await pool.query(`INSERT INTO comment (value, owner, date) VALUES ('${comment}','${username}','${date}')`)
   }
