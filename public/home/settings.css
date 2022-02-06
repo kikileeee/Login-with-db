@@ -1,0 +1,107 @@
+body {
+    overflow-x: hidden;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(../bg.jpg);
+      background-size: auto;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Montserrat', sans-serif;
+    margin: 0;
+  }
+  
+  .menu-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: mediumseagreen;
+    color: #ffffff;
+    padding: 20px;
+    z-index: 1;
+    -webkit-user-select: none;
+    user-select: none;
+    box-sizing: border-box;
+  }
+  
+  .menu-container a {
+    text-decoration: none;
+    color: #22224d;
+    transition: color 0.3s ease;
+  }
+  
+  .menu-container a:hover {
+    color: #bffff4;
+  }
+  .menu ul {
+    list-style: none;
+  }
+  
+  .menu li {
+    padding: 10px 0;
+    font-size: 22px;
+  }
+    .menu-container {
+      width: 100%;
+    }
+  
+    .menu-container a {
+      color: #ffffff;
+    }
+    .menu {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .menu ul {
+      display: flex;
+      padding: 0;
+    }
+  
+    .menu li {
+      padding: 0 20px;
+    }
+    .settingsPanel{
+        display: flex;
+        width: 100%;
+        min-height: 100vh;
+        background-color: white;
+    }
+    .profil{
+        margin: auto;
+        margin-top: 100px;
+        min-width: 600px;
+        min-height: 700px;
+        background-color: rgb(181, 181, 181);
+        display: flex;
+    }
+    .container{
+   width: 400px;
+   height: 225px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   gap: 10px;
+}
+#display_image{
+   width: 200px;
+   height: 200px;
+   background-position: center;
+   background-size: cover;
+   border-radius: 500px;
+}
+.buttonPicture{
+    border: none;
+    width: 200px;
+    height: 50px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: large;
+}
+.buttonPicture:hover{
+
+    background-color: #005dc0;
+    transition: ease-in-out 200ms;
+}

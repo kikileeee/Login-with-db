@@ -119,6 +119,11 @@ app.post('/comment', (req, res) =>{
   commentPost(req.body.user, req.body.comment, req.body.date)
   res.send('s')
 })
+
+app.delete('/comment', (req, res) =>{
+  pool.query(`DELETE FROM comment WHERE commentid = ${req.body.commentid} `)
+  res.send('s')
+})
 app.get('/comment', (req, res) =>{
   pool.query(`SELECT * FROM comment`, (error, data) => {
     res.send(data)
@@ -126,7 +131,6 @@ app.get('/comment', (req, res) =>{
 })
 
 app.delete('/', (req, res) => {
-  console.log(req.body.username)
   pool.query(`DELETE FROM users WHERE username='${req.body.username}'`)
   res.send('status')
 })

@@ -207,7 +207,6 @@ document.querySelector('.btnComment').addEventListener('click', e => {
         user: userInfo.username,
         date: date
     }
-    console.log(userComment)
     fetch('http://localhost:3300/comment', {
         method: 'POST',
         body: JSON.stringify(userComment),
@@ -216,12 +215,20 @@ document.querySelector('.btnComment').addEventListener('click', e => {
         getComments()
     })
 })
+
+    document.querySelector(".inputComment").addEventListener("keyup", function (i) {
+        if ( i.key === 'Enter') {
+            i.preventDefault();
+            document.querySelector(".btnComment").click();
+        }
+    });
+
 function writeAllComments(data) {
     clearChilds('showComments')
     for (i = 0; i < data.length; i++) {
         let parent = document.querySelector('.showComments')
         let div = document.createElement('div')
-        div.classList.add(data[i].owner, 'commentFromUser')
+        div.classList.add(data[i].commentid, data[i].owner, 'commentFromUser')
         let a = document.createElement('a')
         let b = document.createElement('b')
         let p2 = document.createElement('p')
@@ -236,11 +243,8 @@ function writeAllComments(data) {
         div.append(img, b, a, br, a2, p2)
         parent.append(div)
     }
-    if (userInfo.username == 'admin'){
-        mouserOverComment()
-        mouserOutComment()
-    
-    }
+    mouserOverComment()
+    mouserOutComment()
 
 }
 
@@ -258,27 +262,38 @@ getComments()
 
 function mouserOverComment() {
     document.querySelectorAll('.commentFromUser').forEach(e => {
-        e.addEventListener('mouseover', function () {
+        e.addEventListener('mouseenter', function () {
             if (document.querySelector('.hoverElement') != null) {
                 document.querySelectorAll('.hoverElement').forEach(e => {
                     e.remove()
                 })
 
             }
-            let username = this.classList[0]
+            let commentid = Number(this.classList[0])
             let bodyOfUsername = this
+            let username = this.classList[1]
+            let body = {
+                commentid: commentid
+            }
             let p = document.createElement('a')
             p.classList.add('hoverElement')
             p.textContent = 'Delete comment'
-            p.onclick = function(){
-                console.log('clicked')
+
+
+            // if user is owner of the comment
+            if (userInfo.username == 'admin' || userInfo.adminPrivileges == 1 || username == userInfo.username) {
+                bodyOfUsername.append(p)
+                document.querySelector('.hoverElement').addEventListener('click', e => {
+
+                    fetch('http://localhost:3300/comment', {
+                        method: 'DELETE',
+                        body: JSON.stringify(body),
+                        headers: { 'Content-Type': 'application/json' }
+                    }).then(response => {
+                        getComments()
+                    })
+                })
             }
-            bodyOfUsername.append(p)
-
-            // document.querySelector('.hoverElement').addEventListener('click', e=>{
-            //     console.log('clicked')
-            // })
-
         })
     })
 }
