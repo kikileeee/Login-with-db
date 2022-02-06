@@ -93,15 +93,29 @@ body {
 .buttonPicture{
     border: none;
     width: 200px;
-    height: 50px;
+    height: 150px;
     background-color: #007bff;
     color: white;
     border-radius: 5px;
     cursor: pointer;
     font-size: large;
 }
-.buttonPicture:hover{
+.buttonPicture:hover, .custom-file-upload:hover{
 
     background-color: #005dc0;
     transition: ease-in-out 200ms;
+}
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    height: 50px;
+    padding: 20px;
+    margin: 20px;
 }
