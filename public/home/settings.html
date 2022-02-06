@@ -35,14 +35,20 @@
     </nav>
     <div class="settingsPanel">
         <div class="profil">
-            <p>Customize your profile</p>
+            <h1>Customize your profile</h1>
             <div class="container">
+                
+                <div id="display_image"></div>
                 <label for="image_input" class="custom-file-upload">
                     <input type="file" id="image_input" accept=" image/jpeg, image/png">
-                    Custom Upload
+                    Upload Picture
                 </label>
-                <div id="display_image"></div>
-                <button class="buttonPicture">Confirm</button>
+                <div style="display: flex; flex-direction: column;">
+                    <label for="name" class="nameLabel">Change name</label>
+                    <input type="text" placeholder="Change name" id="name">
+                    
+                </div>
+                <button class="buttonPicture confirm">Confirm</button>
             </div>
         </div>
     </div>

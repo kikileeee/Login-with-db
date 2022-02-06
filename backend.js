@@ -4,6 +4,21 @@ const { createPool } = require('mysql');
 const { ok } = require('assert');
 const { response } = require('express');
 const { status } = require('express/lib/response');
+const multer = require('multer')
+const path = require('path')
+
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb)=>{
+    cb(null, 'images' )
+  },
+  filename: (req, file, cb) =>{
+    console.log(file)
+    cb(null, Date.now() + path.extname(file.originalname))
+  }
+})
+
+const upload = multer({storage: storage})
 
 const app = express()
 const port = 3300
@@ -143,7 +158,8 @@ app.put('/s', (req, res) => {
   pool.query(`UPDATE users SET adminPrivileges=0 WHERE username='${req.body.username}'`)
   res.send('status')
 })
-  *
+
+app.post
   function insertData(username, email, password) {
     pool.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`)
     console.log('imported')
