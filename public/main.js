@@ -161,16 +161,21 @@ function htmlHome(data) {
         input.onclick = function () {
             location.href = 'home/home.html'
         }
-        h1.textContent = 'Login successful, Welcome back ' + data.username + ' !!!'
+        h1.textContent = 'Login successful, Welcome back ' + data.username + '!'
         parent.append(h1)
         parent.append(input)
 
         localStorage.clear();
         let dataLocal = {
             username: data.username,
-            adminPrivileges: data.adminPrivileges
+            adminPrivileges: data.adminPrivileges,
+            picture: data.picture
         }
         localStorage.setItem('userInfo', JSON.stringify(dataLocal));
         clearForm()
+    }
+    else{
+        console.log('failed')
+        document.querySelector('.loginPassword').classList.remove('d-none')
     }
 }

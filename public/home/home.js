@@ -213,6 +213,7 @@ document.querySelector('.btnComment').addEventListener('click', e => {
         headers: { 'Content-Type': 'application/json' }
     }).then(response => {
         getComments()
+        document.querySelector('.inputComment').value = ''
     })
 })
 
@@ -238,7 +239,16 @@ function writeAllComments(data) {
         p2.textContent = data[i].value
         let a2 = document.createElement('a')
         let img = document.createElement('img')
-        img.src = 'default.jpg'
+        
+        if (data[i].picture != '' ){
+
+            img.src = 'images/' + data[i].picture
+        }
+        else{
+            
+        img.src = 'images/default.jpg'
+        }
+
         a2.textContent = data[i].date
         div.append(img, b, a, br, a2, p2)
         parent.append(div)
@@ -254,6 +264,7 @@ async function getComments() {
         headers: { 'Content-Type': 'application/json' }
     }).then(response => {
         response.json().then(data => {
+            console.log(data)
             writeAllComments(data)
         })
     })

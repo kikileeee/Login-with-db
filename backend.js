@@ -9,16 +9,16 @@ const path = require('path')
 
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb)=>{
-    cb(null, 'images' )
+  destination: (req, file, cb) => {
+    cb(null, "public/home/images")
   },
-  filename: (req, file, cb) =>{
+  filename: (req, file, cb) => {
     console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
+    cb(null, Date.now() + '_' + file.originalname)
   }
 })
 
-const upload = multer({storage: storage})
+const upload = multer({ storage: storage })
 
 const app = express()
 const port = 3300
@@ -37,13 +37,13 @@ app.use(cors());
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-app.get('/', (req, res) =>{
+app.get('/', (req, res) => {
   pool.query(`SELECT * FROM users`, (error, data) => {
-    
+
     let keys = Object.values(data)
     let responseArray = []
-    
-    for (i=0;i < keys.length; i++){
+
+    for (i = 0; i < keys.length; i++) {
       let responseObject = {
         username: keys[i].username,
         adminPrivileges: keys[i].adminPrivileges
@@ -63,7 +63,8 @@ app.post('/signin', (req, res) => {
     let proceed = {
       loginSuccessful: false,
       username: '',
-      adminPrivileges: 0
+      adminPrivileges: 0,
+      picture: ''
     }
 
     for (i = 0; i < keys.length; i++)
@@ -71,6 +72,7 @@ app.post('/signin', (req, res) => {
         proceed.loginSuccessful = true
         proceed.username = keys[i].username
         proceed.adminPrivileges = keys[i].adminPrivileges
+        proceed.picture = keys[i].picture
         break
       }
     res.send(proceed)
@@ -130,17 +132,17 @@ app.post('/', (req, res) => {
     res.send(responseObject)
   })
 })
-app.post('/comment', (req, res) =>{
+app.post('/comment', (req, res) => {
   commentPost(req.body.user, req.body.comment, req.body.date)
   res.send('s')
 })
 
-app.delete('/comment', (req, res) =>{
+app.delete('/comment', (req, res) => {
   pool.query(`DELETE FROM comment WHERE commentid = ${req.body.commentid} `)
   res.send('s')
 })
-app.get('/comment', (req, res) =>{
-  pool.query(`SELECT * FROM comment`, (error, data) => {
+app.get('/comment', (req, res) => {
+  pool.query(`SELECT commentid, owner, picture, value, date FROM users, comment WHERE users.username = comment.owner ORDER BY commentid ASC`, (error, data) => {
     res.send(data)
   })
 })
@@ -159,12 +161,19 @@ app.put('/s', (req, res) => {
   res.send('status')
 })
 
-app.post
-  function insertData(username, email, password) {
-    pool.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`)
-    console.log('imported')
+app.post('/uploadPicture', upload.single('image'), (req, res) => {
+  res.send(req.file.filename)
+})
+app.put('/uploadPicture', (req, res) => {
+  console.log(req.body)
+  pool.query(`UPDATE users SET picture='${req.body.picture}' WHERE username='${req.body.username}'`)
+})
 
-  }
-  async function commentPost(username, comment, date) {
-    await pool.query(`INSERT INTO comment (value, owner, date) VALUES ('${comment}','${username}','${date}')`)
-  }
+function insertData(username, email, password) {
+  pool.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`)
+  console.log('imported')
+
+}
+async function commentPost(username, comment, date) {
+  await pool.query(`INSERT INTO comment (value, owner, date) VALUES ('${comment}','${username}','${date}')`)
+}
