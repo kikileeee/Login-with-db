@@ -81,7 +81,7 @@ document.querySelector('.signIn').addEventListener('click', e => {
 })
 // Delete and clear Form
 function clearForm() {
-    document.querySelectorAll('.pPasswordConfirm, .pUsername, .pEmail, .pPassword, .pDBUsername, .pLoginName').forEach(e => {
+    document.querySelectorAll('.pPasswordConfirm, .pUsername, .pEmail, .pPassword, .pDBUsername, .pLoginName, .loginPassword').forEach(e => {
         e.classList.add('d-none')
     })
     document.querySelectorAll('.divName, .divPassword').forEach(e => {

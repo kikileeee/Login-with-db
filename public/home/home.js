@@ -208,7 +208,7 @@ document.querySelector('.btnComment').addEventListener('click', e => {
         date: date
     }
     fetch('http://localhost:3300/comment', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(userComment),
         headers: { 'Content-Type': 'application/json' }
     }).then(response => {
@@ -217,14 +217,14 @@ document.querySelector('.btnComment').addEventListener('click', e => {
     })
 })
 
-    document.querySelector(".inputComment").addEventListener("keyup", function (i) {
-        if ( i.key === 'Enter') {
-            i.preventDefault();
-            document.querySelector(".btnComment").click();
-        }
-    });
+document.querySelector(".inputComment").addEventListener("keyup", function (i) {
+    if (i.key === 'Enter') {
+        i.preventDefault();
+        document.querySelector(".btnComment").click();
+    }
+});
 
-function writeAllComments(data) {
+async function writeAllComments(data) {
     clearChilds('showComments')
     for (i = 0; i < data.length; i++) {
         let parent = document.querySelector('.showComments')
@@ -239,14 +239,11 @@ function writeAllComments(data) {
         p2.textContent = data[i].value
         let a2 = document.createElement('a')
         let img = document.createElement('img')
-        
-        if (data[i].picture != '' ){
-
+        if (data[i].picture != '') {
             img.src = 'images/' + data[i].picture
         }
-        else{
-            
-        img.src = 'images/default.jpg'
+        else {
+            img.src = 'images/default.jpg'
         }
 
         a2.textContent = data[i].date
@@ -264,7 +261,6 @@ async function getComments() {
         headers: { 'Content-Type': 'application/json' }
     }).then(response => {
         response.json().then(data => {
-            console.log(data)
             writeAllComments(data)
         })
     })
@@ -320,3 +316,9 @@ function mouserOutComment() {
         })
     })
 }
+
+let danas = new Date()
+let minutes = danas.getMinutes();
+minutes = minutes > 9 ? minutes : '0' + minutes;
+let date = danas.getFullYear() + '-' + (danas.getMonth() + 1) + '-' + danas.getDate() + ' at ' + danas.getHours() + ":" + minutes
+

@@ -5,7 +5,8 @@ const { ok } = require('assert');
 const { response } = require('express');
 const { status } = require('express/lib/response');
 const multer = require('multer')
-const path = require('path')
+const path = require('path');
+const fs = require('fs');
 
 
 const storage = multer.diskStorage({
@@ -13,12 +14,13 @@ const storage = multer.diskStorage({
     cb(null, "public/home/images")
   },
   filename: (req, file, cb) => {
-    console.log(file)
-    cb(null, Date.now() + '_' + file.originalname)
+    cb(null, Date.now() + path.extname(file.originalname))
   }
 })
-
-const upload = multer({ storage: storage })
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }
+})
 
 const app = express()
 const port = 3300
@@ -132,7 +134,7 @@ app.post('/', (req, res) => {
     res.send(responseObject)
   })
 })
-app.post('/comment', (req, res) => {
+app.put('/comment', (req, res) => {
   commentPost(req.body.user, req.body.comment, req.body.date)
   res.send('s')
 })
@@ -164,8 +166,24 @@ app.put('/s', (req, res) => {
 app.post('/uploadPicture', upload.single('image'), (req, res) => {
   res.send(req.file.filename)
 })
+app.delete('/uploadPicture', (req, res) => {
+  console.log('gonna delete this' + req.body.picture)
+  let picurePath = 'public/home/images/'+ req.body.picture
+  fs.unlink(picurePath, deleteCallBack)
+  function deleteCallBack(error){
+    if (error){
+      console.log('Error in deleting file')
+      console.log(error.message)
+    } else {
+      console.log('Deleted Successfully..')
+    }
+  }
+})
 app.put('/uploadPicture', (req, res) => {
-  console.log(req.body)
+  pool.query(`SELECT  * FROM users  WHERE username='${req.body.username}'`, (error, data) =>{
+    res.send(data)
+  })
+  console.log('nova slika ' +req.body.picture)
   pool.query(`UPDATE users SET picture='${req.body.picture}' WHERE username='${req.body.username}'`)
 })
 

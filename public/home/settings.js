@@ -13,8 +13,8 @@ image_input.addEventListener("change", function () {
 
 document.querySelector('.confirm').addEventListener('click', e => {
    let file = document.getElementById('image_input').files[0]
-
    let formdata = new FormData();
+   e.preventDefault()
    Object.defineProperty(file, 'name', {
       writable: true,
       value: userInfo.username
@@ -22,52 +22,72 @@ document.querySelector('.confirm').addEventListener('click', e => {
    console.log(file)
    formdata.append("image", file);
 
-   let requestOptions = {
+   fetch("http://localhost:3300/uploadPicture", {
       method: 'POST',
-      body: formdata,
-      redirect: 'follow'
-   };
-
-   fetch("http://localhost:3300/uploadPicture", requestOptions)
+      body: formdata
+   })
       .then(response => response.text())
       .then(result => {
-         console.log(result)
-         sendData(result)
-         resetUser(result)
-      })
-      .catch(error => console.log('error', error));
 
-   e.preventDefault()
+         console.log(result)
+         if (result.endsWith('.jpg') || result.endsWith('.png') || result.endsWith('.jpeg')) {
+            console.log('good')
+
+            
+            resetUser(result)
+            sendData(result)          
+         }
+         else {
+            console.log('bad')
+         }
+      })
+      .catch(error => console.log('error', error))
+
 })
 
-function sendData(x) {
+async function sendData(x) {
    body = {
       username: userInfo.username,
       picture: x
    }
-   fetch("http://localhost:3300/uploadPicture", {
+   await fetch("http://localhost:3300/uploadPicture", {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' }
-  })
+   })
       .then(response => response.text())
       .then(result => {
          console.log(result)
+         deletePictureAfterNewIsUploaded(result.picture)
       })
 }
 
-if (userInfo.picture != '' ){
+if (userInfo.picture != '') {
    document.getElementById('display_image').style.backgroundImage = `url(images/${userInfo.picture})`
 }
 
-function resetUser(y){
+function resetUser(y) {
 
    let resetUserInfo = {
       username: userInfo.username,
       adminPrivileges: userInfo.adminPrivileges,
       picture: y
-  }
-  
-  localStorage.clear();
-  localStorage.setItem('userInfo', JSON.stringify(resetUserInfo));
+   }
+
+   localStorage.clear();
+   localStorage.setItem('userInfo', JSON.stringify(resetUserInfo));
+}
+
+
+function deletePictureAfterNewIsUploaded(x){
+   let body = {picture:x}
+   fetch("http://localhost:3300/uploadPicture", {
+      method: 'DELETE',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' }
+   })
+      .then(response => response.text())
+      .then(result => {
+         console.log(result)
+      })
 }
