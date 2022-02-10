@@ -30,7 +30,7 @@ document.querySelector('.confirm').addEventListener('click', e => {
       .then(result => {
 
          console.log(result)
-         if (result.endsWith('.jpg') || result.endsWith('.png') || result.endsWith('.jpeg')) {
+         if (result.endsWith('.jpg') || result.endsWith('.png') || result.endsWith('.jpeg') || result.endsWith('.jfif')){
             console.log('good')
 
             
@@ -55,10 +55,11 @@ async function sendData(x) {
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' }
    })
-      .then(response => response.text())
+      .then(response => response.json())
       .then(result => {
-         console.log(result)
-         deletePictureAfterNewIsUploaded(result.picture)
+         console.log('ispod je id')
+         console.log(result[0].picture)
+         deletePictureAfterNewIsUploaded(result[0].picture)
       })
 }
 
@@ -91,3 +92,8 @@ function deletePictureAfterNewIsUploaded(x){
          console.log(result)
       })
 }
+//Logout click
+document.addEventListener('DOMContentLoaded', function () {
+   document.querySelector('.logoutButton').addEventListener('click', e =>{
+       localStorage.clear();
+})})

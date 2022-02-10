@@ -180,7 +180,7 @@ app.delete('/uploadPicture', (req, res) => {
   }
 })
 app.put('/uploadPicture', (req, res) => {
-  pool.query(`SELECT  * FROM users  WHERE username='${req.body.username}'`, (error, data) =>{
+  pool.query(`SELECT picture FROM users  WHERE username='${req.body.username}'`, (error, data) =>{
     res.send(data)
   })
   console.log('nova slika ' +req.body.picture)
@@ -194,4 +194,7 @@ function insertData(username, email, password) {
 }
 async function commentPost(username, comment, date) {
   await pool.query(`INSERT INTO comment (value, owner, date) VALUES ('${comment}','${username}','${date}')`)
+}
+function putNewData(){
+
 }

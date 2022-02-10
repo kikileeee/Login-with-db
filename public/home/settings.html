@@ -6,6 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript">
+        function preloadFunc() {
+          if (localStorage.getItem("userInfo") === null) {
+            window.location.href = "../index.html";
+          }
+        }
+        window.onpaint = preloadFunc();
+      </script>
     <link rel="stylesheet" href="settings.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
@@ -28,7 +36,7 @@
                     <a href="settings.html">Settings</a>
                 </li>
                 <li>
-                    <a href="../index.html">Logout</a>
+                    <a class='logoutButton' href="../index.html">Logout</a>
                 </li>
             </ul>
         </div>

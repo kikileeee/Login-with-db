@@ -6,6 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="home.css">
+  <script type="text/javascript">
+    function preloadFunc() {
+      if (localStorage.getItem("userInfo") === null) {
+        window.location.href = "../index.html";
+      }
+    }
+    window.onpaint = preloadFunc();
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
   </style>
@@ -22,13 +30,13 @@
       </ul>
       <ul>
         <li>
-        <a href="home.html">Home</a>
-      </li>
+          <a href="home.html">Home</a>
+        </li>
         <li>
-        <a href="settings.html">Settings</a>
-      </li>
+          <a href="settings.html">Settings</a>
+        </li>
         <li>
-          <a href="../index.html">Logout</a>
+          <a class='logoutButton' href="../index.html">Logout</a>
         </li>
       </ul>
     </div>
@@ -38,16 +46,24 @@
       <nav>
         <ul class="grid">
           <h1>Admin Panel</h1>
-          <li><div class="allUsers">Show users</div></li>
-          <li><div class="allAdmins">Show Admins</div></li>
-          <li><div class="adminPanelShowComments">Show Comments</div></li>      
-          <li><div class="hide">Hide all</div></li>
+          <li>
+            <div class="allUsers">Show users</div>
+          </li>
+          <li>
+            <div class="allAdmins">Show Admins</div>
+          </li>
+          <li>
+            <div class="adminPanelShowComments">Show Comments</div>
+          </li>
+          <li>
+            <div class="hide">Hide all</div>
+          </li>
         </ul>
       </nav>
     </div>
     <div class="secondPanel">
       <div class="adminPanelwButton"></div>
-      
+
       <div class="showComments"></div>
       <div class="addComment">
         <input type="text" class="inputComment" placeholder="Insert comment here">

@@ -322,3 +322,7 @@ let minutes = danas.getMinutes();
 minutes = minutes > 9 ? minutes : '0' + minutes;
 let date = danas.getFullYear() + '-' + (danas.getMonth() + 1) + '-' + danas.getDate() + ' at ' + danas.getHours() + ":" + minutes
 
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.logoutButton').addEventListener('click', e =>{
+        localStorage.clear();
+})})
