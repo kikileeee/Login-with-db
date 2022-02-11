@@ -57,27 +57,6 @@ document.querySelector('.signIn').addEventListener('click', e => {
         console.log(data)
         htmlHome(data)
     }))
-
-    //     else if (username != dataUsers[i].username) {
-    //         count++
-    //     }
-    //     else {
-    //         let parentPassword = document.querySelector('.divPassword')
-    //         clearChilds('divPassword')
-    //         let p = document.createElement('p')
-    //         p.textContent = 'Password is wrong'
-    //         parentPassword.append(p)
-    //     }
-    // }
-
-    // if (count == dataUsers.length) {
-    //     clearChilds('divName')
-    //     let p = document.createElement('p')
-    //     p.textContent = 'This username does not exist'
-    //     document.querySelector('.divName').append(p)
-    // } else {
-    //     clearChilds('divName')
-    // }
 })
 // Delete and clear Form
 function clearForm() {

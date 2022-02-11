@@ -157,3 +157,11 @@ input[type="file"] {
   font-weight: 500;
 
 }
+.onErrorImage {
+  color: red;
+  font-weight: 500px;
+  margin: 0;
+}
+.d-none {
+  display: none;
+}

@@ -167,7 +167,6 @@ app.post('/uploadPicture', upload.single('image'), (req, res) => {
   res.send(req.file.filename)
 })
 app.delete('/uploadPicture', (req, res) => {
-  console.log('gonna delete this' + req.body.picture)
   let picurePath = 'public/home/images/'+ req.body.picture
   fs.unlink(picurePath, deleteCallBack)
   function deleteCallBack(error){
@@ -183,7 +182,6 @@ app.put('/uploadPicture', (req, res) => {
   pool.query(`SELECT picture FROM users  WHERE username='${req.body.username}'`, (error, data) =>{
     res.send(data)
   })
-  console.log('nova slika ' +req.body.picture)
   pool.query(`UPDATE users SET picture='${req.body.picture}' WHERE username='${req.body.username}'`)
 })
 

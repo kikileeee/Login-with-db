@@ -240,6 +240,9 @@ async function writeAllComments(data) {
         let a2 = document.createElement('a')
         let img = document.createElement('img')
         if (data[i].picture != '') {
+            if (!img.width) {
+                img.src = 'images/default.jpg'
+            }
             img.src = 'images/' + data[i].picture
         }
         else {
@@ -323,6 +326,7 @@ minutes = minutes > 9 ? minutes : '0' + minutes;
 let date = danas.getFullYear() + '-' + (danas.getMonth() + 1) + '-' + danas.getDate() + ' at ' + danas.getHours() + ":" + minutes
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('.logoutButton').addEventListener('click', e =>{
+    document.querySelector('.logoutButton').addEventListener('click', e => {
         localStorage.clear();
-})})
+    })
+})
