@@ -1,13 +1,12 @@
 const express = require('express')
 const cors = require("cors");
 const { createPool } = require('mysql');
-const { ok } = require('assert');
-const { response } = require('express');
-const { status } = require('express/lib/response');
 const multer = require('multer')
 const path = require('path');
 const fs = require('fs');
+const bcrypt = require('bcrypt')
 
+let hashedPass = ''
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -57,7 +56,7 @@ app.get('/', (req, res) => {
   })
 })
 app.post('/signin', (req, res) => {
-  pool.query(`SELECT * FROM users`, (error, data) => {
+  pool.query(`SELECT * FROM users`, async (error, data) => {
     console.log(req.body)
     let keys = Object.values(data)
     let username = req.body.username
@@ -68,9 +67,9 @@ app.post('/signin', (req, res) => {
       adminPrivileges: 0,
       picture: ''
     }
-
     for (i = 0; i < keys.length; i++)
-      if (username == keys[i].username && password == keys[i].password) {
+
+      if (username == keys[i].username && (await bcrypt.compare(password, keys[i].password))) {
         proceed.loginSuccessful = true
         proceed.username = keys[i].username
         proceed.adminPrivileges = keys[i].adminPrivileges
@@ -83,11 +82,12 @@ app.post('/signin', (req, res) => {
 
 app.post('/', (req, res) => {
 
-  pool.query(`SELECT * FROM users`, (error, data) => {
+  pool.query(`SELECT * FROM users`, async (error, data) => {
     let keys = Object.values(data)
     let username = req.body.username
     let email = req.body.email
     let password = req.body.password
+    hashedPass = await bcrypt.hash(password, 10)
     let confirmPassword = req.body.confirmPassword
     let pushData = false
     let responseObject = {
@@ -129,7 +129,7 @@ app.post('/', (req, res) => {
       }
     }
     if (pushData) {
-      pool.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`)
+      pool.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${hashedPass}')`)
     }
     res.send(responseObject)
   })
@@ -167,10 +167,10 @@ app.post('/uploadPicture', upload.single('image'), (req, res) => {
   res.send(req.file.filename)
 })
 app.delete('/uploadPicture', (req, res) => {
-  let picurePath = 'public/home/images/'+ req.body.picture
+  let picurePath = 'public/home/images/' + req.body.picture
   fs.unlink(picurePath, deleteCallBack)
-  function deleteCallBack(error){
-    if (error){
+  function deleteCallBack(error) {
+    if (error) {
       console.log('Error in deleting file')
       console.log(error.message)
     } else {
@@ -179,7 +179,7 @@ app.delete('/uploadPicture', (req, res) => {
   }
 })
 app.put('/uploadPicture', (req, res) => {
-  pool.query(`SELECT picture FROM users  WHERE username='${req.body.username}'`, (error, data) =>{
+  pool.query(`SELECT picture FROM users  WHERE username='${req.body.username}'`, (error, data) => {
     res.send(data)
   })
   pool.query(`UPDATE users SET picture='${req.body.picture}' WHERE username='${req.body.username}'`)
@@ -193,6 +193,6 @@ function insertData(username, email, password) {
 async function commentPost(username, comment, date) {
   await pool.query(`INSERT INTO comment (value, owner, date) VALUES ('${comment}','${username}','${date}')`)
 }
-function putNewData(){
+function putNewData() {
 
 }
