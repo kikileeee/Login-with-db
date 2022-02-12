@@ -1,5 +1,9 @@
 # Fullstack project - login + comments
 
+Vanilla js
+Node js as backend
+Mysql as a database
+
 Site with sign in and login with database on mysql.
 
 // 
@@ -17,3 +21,8 @@ Admins can delete any comment from any user.
 
 If users is logout and tries open site where home.html is, it will redirect him to index.html and vice versa.
 //
+[usersdb.txt](https://github.com/kikileeee/login-comment-with-db/files/8054305/usersdb.txt)
+
+
+![1](https://user-images.githubusercontent.com/83477929/153724475-d058557a-40d7-4a89-974a-0a9018672e36.png)
+(Delete comment button is hover event)
