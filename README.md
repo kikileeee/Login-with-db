@@ -26,3 +26,18 @@ If users is logout and tries open site where home.html is, it will redirect him 
 
 ![1](https://user-images.githubusercontent.com/83477929/153724475-d058557a-40d7-4a89-974a-0a9018672e36.png)
 (Delete comment button is hover event)
+
+
+Upload picture page 
+![ot_1](https://user-images.githubusercontent.com/83477929/153724853-0de50120-8543-469b-a067-59bf9f12aef7.png)
+
+
+SignUp
+
+![Screenshot_1](https://user-images.githubusercontent.com/83477929/153724863-6a929d14-5a8c-4ce8-bd4f-e0bc04ac1235.png)
+
+
+Admin panel for viewing all users
+![panel](https://user-images.githubusercontent.com/83477929/153724872-bd458d5b-1bef-42ca-9430-4dec955cace6.png)
+
+
