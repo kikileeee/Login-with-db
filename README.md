@@ -1,4 +1,4 @@
-# Login-with-db
+# Fullstack project - login + comments
 
 Site with sign in and login with database on mysql.
 
