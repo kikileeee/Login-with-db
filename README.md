@@ -1,13 +1,11 @@
 # Fullstack project - login + comments
 
-Vanilla js
-Node js as backend
+Vanilla js,
+Node js as backend,
 Mysql as a database
 
-Site with sign in and login with database on mysql.
-
 // 
-Sign in validation is checking on backend.js as the most logic i located there.
+Signin validation is on backend.js, most of the logic is located there.
 There is also password encryption.
 
 User can add comments and remove only its own ones.
@@ -32,13 +30,15 @@ If users is logout and tries open site where home.html is, it will redirect him 
 (Delete comment button is hover event)
 
 
-Upload picture page 
+
 ![ot_1](https://user-images.githubusercontent.com/83477929/153724853-0de50120-8543-469b-a067-59bf9f12aef7.png)
+Upload picture page 
 
 
-SignUp
 
 ![Screenshot_1](https://user-images.githubusercontent.com/83477929/153724863-6a929d14-5a8c-4ce8-bd4f-e0bc04ac1235.png)
+
+SignUp
 
 
 Admin panel for viewing all users
